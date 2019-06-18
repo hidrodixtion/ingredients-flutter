@@ -41,7 +41,44 @@
       "ingredients": "Sucre, huile de palme, noisettes 13%, cacao maigre 7,4%, lait écrémé en poudre 6,6%, lactoserum en poudre, émulsifiants : lécithines [soja], vanilline"
     },
     {
-      
+      "product_name": "Spaghetti and Sausages",
+      "front": "https://static.openfoodfacts.org/images/products/930/065/703/4719/front_en.4.400.jpg",
+      "ingredients": "INGREDIENTS Spaghetti (45%) (Water, Wheat Flour) Tomato Sauce (43%) [Tomatoes, Sugar, Salt,Cheese (Contains Milk) Food Acid (Citric Acid),Flavours], Sausages (12%) [Lamb, Water, Beef, Wheat Flour,Seasoning (Contains Flavours), Salt]"
+    },
+    {
+      "product_name": "Milo",
+      "front": "https://static.openfoodfacts.org/images/products/930/060/500/3811/front_en.13.400.jpg",
+      "ingredients": "EXTRACT OF MALT _BARLEY_ (16%) OR MALT BARLEY AND RICE (TOTAL EXTRACT 35%), _MILK_ SOLIDS, SUGAR, COCOA, MINERALS (CALCIUM, IRON), MALTODEXTRIN (CORN) VITAMINS (C, B3, A, B6, D, B2, B12), EMULSIFIER (_SOY_ LECITHIN)"
+    },
+    {
+      "product_name": "Kit Kat",
+      "front": "https://static.openfoodfacts.org/images/products/93600057/front_en.8.400.jpg",
+      "ingredients": "Ingredients: Sugar, Full cream milk powder, Wheat flour, Cocoa butter, Vegetable [Emulsifier (Soy lecithin)], Cocoa Mass, Cocoa, Emuslifiers (Soy lecithin, 476), Yeast Raising Agent (Sodium bicarbonate), Salt, Flavour. Contains Milk, Soy and Wheat May contain Peanuts and Tree nuts. Product contains 70% Milk chocolate and 30% W fingers. Milk chocolate contains minimum 22% Cocoa solids, 25% Milk solids. MADE IN AUSTRALIA FROM IMPORTED AND LOCAL INGREDIENTS."
+    },
+    {
+      "product_name": "Lait de coco 100% naturel",
+      "front": "https://static.openfoodfacts.org/images/products/931/162/701/0183/front_fr.15.400.jpg",
+      "ingredients": "extraits de noix coco 86%, eau"
+    },
+    {
+      "product_name": "Snickers Ice Cream",
+      "front": "https://static.openfoodfacts.org/images/products/500/015/934/4074/front_en.7.400.jpg",
+      "ingredients": "Sucre,sirop de glucose, _lait_ écrémé (13 %), _cacahuètes_, crème légère (lait), eau ,_lait _écrémé concentré sucré ,matière grasse de noix de coco, beurre de cacao, matière grasse de palme, pâte de cacao,_lait _écrémé en poudre, matière grasse de lait,_lactose _,petit - lait en poudre,émulsifiants (lécithine de _soja _E471, E477), stabilisant (E407, E410, E412),cacao maigre,sel,extrait naturel de vanille, (peut contenir:_amande_, _noisette_ )."
+    },
+    {
+      "product_name": "Maesri Masaman Curry Paste",
+      "front": "https://static.openfoodfacts.org/images/products/885/053/924/0444/front_en.4.400.jpg",
+      "ingredients": "Garlic, Sugar, _Soybean_ oil, Dried chilli pepper, Tamarind juice, Shallot, Salt, Lemongrass, Spices (coriander seeds, cumin, cardamom, cinnamon, bay leaves, lesser galanga, cloves), Kaffir lime, Galangal"
+    },
+    {
+      "product_name": "Instant Oatmeal",
+      "front": "https://static.openfoodfacts.org/images/products/955/618/396/0811/front_en.7.400.jpg",
+      "ingredients": "100% oats"
+    },
+    {
+      "product_name": "Tuna Chunks in Olive Oil",
+      "front": "https://static.openfoodfacts.org/images/products/955/604/161/1466/front_en.4.400.jpg",
+      "ingredients": "Wild Caught Tuna _Fish_ in Pieces, Extra Virgin Olive Oil, Salt"
     }
   ]
 }
