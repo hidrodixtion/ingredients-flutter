@@ -12,17 +12,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Food> list = List();
+  List<Food> breakfast = List();
+  List<Food> dessert = List();
+  List<Food> currentList = List();
+
+  int currentTab = 0;
 
   void loadData() async {
     var data =
         await DefaultAssetBundle.of(context).loadString("assets/data.json");
     final result = json.decode(data);
 
-    final foodList =
-        result['data'].map<Food>((item) => Food.fromJson(item)).toList();
+    breakfast = result['breakfast']
+        .map<Food>((item) => Food.fromJson(item))
+        .toList();
+    dessert = result['dessert']
+        .map<Food>((item) => Food.fromJson(item))
+        .toList();
     setState(() {
-      list = foodList;
+      currentList = breakfast;
     });
   }
 
@@ -59,7 +67,8 @@ class _MyAppState extends State<MyApp> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => Detail(
-                                item: list[position],
+                                item: currentList[position],
+                                tag: "product_$position",
                               ),
                         ),
                       ),
@@ -68,18 +77,36 @@ class _MyAppState extends State<MyApp> {
                   child: GridTile(
                     footer: GridTileBar(
                       backgroundColor: Colors.black45,
-                      title: Text(list[position].name),
+                      title: Text(currentList[position].name),
                     ),
-                    child: Image.network(
-                      list[position].image,
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: "product_$position",
+                      child: Image.network(
+                        currentList[position].image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               );
             },
-            itemCount: list.length,
+            itemCount: currentList.length,
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.free_breakfast), title: Text("Breakfast")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.cake), title: Text("Dessert")),
+          ],
+          currentIndex: currentTab,
+          onTap: (position) {
+            setState(() {
+              currentTab = position;
+              currentList = (position == 0) ? breakfast : dessert;
+            });
+          },
         ),
       ),
     );
