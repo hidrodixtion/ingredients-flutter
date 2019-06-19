@@ -2,15 +2,34 @@ import 'package:flutter/material.dart';
 
 import 'model/food.dart';
 
-class Detail extends StatelessWidget {
+class Detail extends StatefulWidget {
   final Food item;
   final String tag;
 
   Detail({@required this.item, @required this.tag});
 
   @override
+  _DetailState createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _showSnackbar(String item) {
+    var snackbar = SnackBar(content: Text("Anda memilih : $item"),);
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showSnackbar(widget.item.name));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Detail Bahan"),
         automaticallyImplyLeading: true,
@@ -20,9 +39,9 @@ class Detail extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             Hero(
-              tag: tag,
+              tag: widget.tag,
               child: Image.network(
-                item.image,
+                widget.item.image,
                 width: 256,
                 height: 256,
               ),
@@ -31,7 +50,7 @@ class Detail extends StatelessWidget {
               height: 8,
             ),
             Text(
-              item.name,
+              widget.item.name,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -41,7 +60,7 @@ class Detail extends StatelessWidget {
               height: 16,
             ),
             Text(
-              item.ingredients,
+              widget.item.ingredients,
               textAlign: TextAlign.justify,
             )
           ],
