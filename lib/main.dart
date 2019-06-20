@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:ingredients/customview/my_progress_indicator.dart';
 import 'package:ingredients/detail.dart';
 import 'package:ingredients/model/food.dart';
+import 'package:ingredients/service/meal_service.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,25 +14,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Food> breakfast = List();
   List<Food> dessert = List();
+  List<Food> seafood = List();
   List<Food> currentList = List();
 
   int currentTab = 0;
+  bool isLoading = true;
 
   void loadData() async {
-    var data =
-        await DefaultAssetBundle.of(context).loadString("assets/data.json");
-    final result = json.decode(data);
-
-    breakfast = result['breakfast']
-        .map<Food>((item) => Food.fromJson(item))
-        .toList();
-    dessert = result['dessert']
-        .map<Food>((item) => Food.fromJson(item))
-        .toList();
+    dessert = await MealService.getCategory("dessert");
+    seafood = await MealService.getCategory("seafood");
     setState(() {
-      currentList = breakfast;
+      currentList = dessert;
+      isLoading = false;
     });
   }
 
@@ -39,6 +35,47 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     loadData();
+  }
+
+  Widget _buildMealGrid() {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
+      itemBuilder: (context, position) {
+        return Material(
+          type: MaterialType.card,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12)),
+          child: InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Detail(
+                  item: currentList[position],
+                  tag: "product_$position",
+                ),
+              ),
+            ),
+            customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12)),
+            child: GridTile(
+              footer: GridTileBar(
+                backgroundColor: Colors.black45,
+                title: Text(currentList[position].name),
+              ),
+              child: Hero(
+                tag: "product_$position",
+                child: Image.network(
+                  currentList[position].image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      itemCount: currentList.length,
+    );
   }
 
   @override
@@ -54,57 +91,20 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
-            itemBuilder: (context, position) {
-              return Material(
-                type: MaterialType.card,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: InkWell(
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Detail(
-                                item: currentList[position],
-                                tag: "product_$position",
-                              ),
-                        ),
-                      ),
-                  customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                  child: GridTile(
-                    footer: GridTileBar(
-                      backgroundColor: Colors.black45,
-                      title: Text(currentList[position].name),
-                    ),
-                    child: Hero(
-                      tag: "product_$position",
-                      child: Image.network(
-                        currentList[position].image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-            itemCount: currentList.length,
-          ),
+          child: isLoading ? MyProgressIndicator(info: "Memuat Daftar Makanan",) : _buildMealGrid()
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.free_breakfast), title: Text("Breakfast")),
-            BottomNavigationBarItem(
                 icon: Icon(Icons.cake), title: Text("Dessert")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.fastfood), title: Text("Seafood")),
           ],
           currentIndex: currentTab,
           onTap: (position) {
             setState(() {
               currentTab = position;
-              currentList = (position == 0) ? breakfast : dessert;
+              currentList = (position == 0) ? dessert : seafood;
             });
           },
         ),
