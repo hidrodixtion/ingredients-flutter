@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ingredients/menu.dart';
+import 'package:ingredients/service/favorite_service.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // make sure to initialise the favorite service first.
+  FavoriteService.shared();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
 
