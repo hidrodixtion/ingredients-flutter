@@ -7,24 +7,47 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ingredients/detail.dart';
 
 import 'package:ingredients/main.dart';
+import 'package:ingredients/model/food.dart';
+import 'package:ingredients/service/meal_service.dart';
+import 'package:mockito/mockito.dart';
+import 'package:http/http.dart' as http;
+
+class MockClient extends Mock implements http.Client {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  group("test main widget", () {
+    final client = MockClient();
+    final service = MealService.shared();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    setUp(() {
+      service.client = client;
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    testWidgets('Main is shown and loading', (WidgetTester tester) async {
+      var response = """
+      {
+        "meals": [
+        {
+          "strMeal": "Apple & Blackberry Crumble",
+          "strMealThumb": "",
+          "idMeal": "52893"
+        }
+        ]
+      }
+      """;
+      when(client.get(
+          "https://www.themealdb.com/api/json/v1/1/filter.php?c=seafood"))
+          .thenAnswer((_) async => http.Response(response, 200));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      when(client.get(
+          "https://www.themealdb.com/api/json/v1/1/filter.php?c=dessert"))
+          .thenAnswer((_) async => http.Response(response, 200));
+
+      await tester.pumpWidget(MyApp());
+      expect(find.text("Memuat Daftar Makanan"), findsOneWidget);
+    });
   });
 }

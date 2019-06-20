@@ -14,31 +14,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Food> dessert = List();
-  List<Food> seafood = List();
-  List<Food> currentList = List();
+  Future<List<Food>> dessertFuture;
+  Future<List<Food>> seafoodFuture;
 
   int currentTab = 0;
   bool isLoading = true;
   final service = MealService.shared();
 
-  void loadData() async {
-    dessert = await service.getCategory("dessert");
-    seafood = await service.getCategory("seafood");
-    setState(() {
-      currentList = dessert;
-      isLoading = false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-
-    loadData();
+    dessertFuture = service.getCategory("dessert");
+    seafoodFuture = service.getCategory("seafood");
   }
 
-  Widget _buildMealGrid() {
+  Widget _buildMealGrid(List<Food> currentList) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
@@ -92,7 +82,16 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: isLoading ? MyProgressIndicator(info: "Memuat Daftar Makanan",) : _buildMealGrid()
+          child: FutureBuilder(
+            future: (currentTab == 0) ? dessertFuture : seafoodFuture,
+            builder: (context, AsyncSnapshot<List<Food>> snapshot) {
+              if (snapshot.hasData) {
+                return _buildMealGrid(snapshot.data);
+              }
+
+              return MyProgressIndicator(info: "Memuat Daftar Makanan",);
+            },
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
@@ -105,7 +104,6 @@ class _MyAppState extends State<MyApp> {
           onTap: (position) {
             setState(() {
               currentTab = position;
-              currentList = (position == 0) ? dessert : seafood;
             });
           },
         ),
