@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingredients/customview/meal_grid.dart';
 import 'package:ingredients/customview/my_progress_indicator.dart';
 import 'package:ingredients/detail.dart';
 import 'package:ingredients/search.dart';
@@ -16,9 +17,17 @@ class _MenuState extends State<Menu> {
   Future<List<Food>> dessertFuture;
   Future<List<Food>> seafoodFuture;
 
+  List<Food> currentList = [];
+
   int currentTab = 0;
   bool isLoading = true;
   final service = MealService.shared();
+
+  void _openSearch() {
+    final title = (currentTab == 0) ? "Cari Dessert" : "Cari Seafood";
+    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+        Search(title: title, list: currentList,)));
+  }
 
   @override
   void initState() {
@@ -27,56 +36,13 @@ class _MenuState extends State<Menu> {
     seafoodFuture = service.getCategory("seafood");
   }
 
-  Widget _buildMealGrid(List<Food> currentList) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
-      itemBuilder: (context, position) {
-        return Material(
-          type: MaterialType.card,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12)),
-          child: InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Detail(
-                  item: currentList[position],
-                  tag: "product_$position",
-                ),
-              ),
-            ),
-            customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)),
-            child: GridTile(
-              footer: GridTileBar(
-                backgroundColor: Colors.black45,
-                title: Text(currentList[position].name),
-              ),
-              child: Hero(
-                tag: "product_$position",
-                child: Image.network(
-                  currentList[position].image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-      itemCount: currentList.length,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bahan Makanan"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Search(title: "Cari Dessert", category: "Dessert",)));
-          },)
+          IconButton(icon: Icon(Icons.search), onPressed: () => _openSearch(),)
         ],
       ),
       body: Padding(
@@ -85,7 +51,8 @@ class _MenuState extends State<Menu> {
           future: (currentTab == 0) ? dessertFuture : seafoodFuture,
           builder: (context, AsyncSnapshot<List<Food>> snapshot) {
             if (snapshot.hasData) {
-              return _buildMealGrid(snapshot.data);
+              currentList = snapshot.data;
+              return MealGrid(list: snapshot.data);
             }
 
             return MyProgressIndicator(info: "Memuat Daftar Makanan",);

@@ -30,4 +30,11 @@ class MealService {
     final data = FoodDetail.fromJson(body["meals"][0]);
     return data;
   }
+
+  Future<List<FoodDetail>> findMeal(String search) async {
+    final response = await _client.get("$_baseUrl/filter.php?s=$search");
+    final body = json.decode(response.body);
+    final list = body['meals'].map<FoodDetail>((item) => Food.fromJson(item)).toList();
+    return list;
+  }
 }
