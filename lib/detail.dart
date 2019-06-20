@@ -24,7 +24,7 @@ class _DetailState extends State<Detail> {
   bool isFavorite = false;
 
   void _showSnackbar(String item) {
-    var snackbar = SnackBar(content: Text("Anda memilih : $item"),);
+    var snackbar = SnackBar(content: Text(item),);
     _scaffoldKey.currentState.showSnackBar(snackbar);
   }
 
@@ -41,8 +41,10 @@ class _DetailState extends State<Detail> {
   void _toggleFavorite() {
     if (isFavorite) {
       favService.removeFavorite(widget.item.category, widget.item.id);
+      _showSnackbar("${widget.item.name} telah dihapus dari favorit.");
     } else {
       favService.addNewFavorite(widget.item.category, widget.item);
+      _showSnackbar("${widget.item.name} telah ditambahkan sebagai favorit.");
     }
 
     setState(() {
@@ -53,7 +55,7 @@ class _DetailState extends State<Detail> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _showSnackbar(widget.item.name));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showSnackbar("Anda memilih: ${widget.item.name}"));
 
     _loadData();
   }
