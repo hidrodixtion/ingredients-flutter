@@ -53,6 +53,26 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "app"
+    productFlavors {
+
+        production {
+            dimension "app"
+            applicationId "com.hidrodixtion.production"
+            versionCode 1
+            versionName "1.0"
+            resValue "string", "app_name", "Ingredients Pro"
+        }
+
+        development {
+            dimension "app"
+            applicationId "com.hidrodixtion.dev"
+            versionCode 1
+            versionName "1.0"
+            resValue "string", "app_name", "Ingredients Dev"
+        }
+    }
 }
 
 flutter {
