@@ -82,7 +82,7 @@ class _DetailState extends State<Detail> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: isLoading ? MyProgressIndicator(info: "Memuat Detail",) : _buildInfo();
+        child: isLoading ? MyProgressIndicator(info: "Memuat Detail",) : _buildInfo()
       ),
     );
   }
