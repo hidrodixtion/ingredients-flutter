@@ -5,15 +5,11 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ingredients/detail.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:ingredients/main.dart';
-import 'package:ingredients/model/food.dart';
 import 'package:ingredients/service/meal_service.dart';
 import 'package:mockito/mockito.dart';
-import 'package:http/http.dart' as http;
 
 class MockClient extends Mock implements http.Client {}
 
