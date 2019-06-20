@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ingredients/customview/my_progress_indicator.dart';
 import 'package:ingredients/model/food_detail.dart';
+import 'package:ingredients/service/favorite_service.dart';
 import 'package:ingredients/service/meal_service.dart';
 
 import 'model/food.dart';
@@ -17,8 +18,10 @@ class Detail extends StatefulWidget {
 
 class _DetailState extends State<Detail> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final favService = FavoriteService.shared();
   var isLoading = true;
   FoodDetail detail;
+  bool isFavorite = false;
 
   void _showSnackbar(String item) {
     var snackbar = SnackBar(content: Text("Anda memilih : $item"),);
@@ -29,6 +32,21 @@ class _DetailState extends State<Detail> {
     detail = await MealService.shared().getDetail(widget.item.id);
     setState(() {
       isLoading = false;
+
+      // check whether this item already added as a favorite.
+      isFavorite = favService.isFavorite(widget.item.category, widget.item.id);
+    });
+  }
+
+  void _toggleFavorite() {
+    if (isFavorite) {
+      favService.removeFavorite(widget.item.category, widget.item.id);
+    } else {
+      favService.addNewFavorite(widget.item.category, widget.item);
+    }
+
+    setState(() {
+      isFavorite = !isFavorite;
     });
   }
 
@@ -79,6 +97,9 @@ class _DetailState extends State<Detail> {
       appBar: AppBar(
         title: Text("Detail Bahan"),
         automaticallyImplyLeading: true,
+        actions: <Widget>[
+          IconButton(icon: Icon(isFavorite ? Icons.star : Icons.star_border), onPressed: () => _toggleFavorite(),),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

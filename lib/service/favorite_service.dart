@@ -24,7 +24,7 @@ class FavoriteService {
     }
 
     var data = json.decode(strData);
-    return data.map<Food>((item) => Food.fromJson(item)).toList();
+    return data.map<Food>((item) => Food.fromJson(item, category)).toList();
   }
 
   void removeFavorite(String category, String id) {
@@ -36,6 +36,7 @@ class FavoriteService {
   void addNewFavorite(String category, Food food) {
     var list = getFavorites(category);
     list.add(food);
+    print(list);
     _saveFavorites(category, list);
   }
 

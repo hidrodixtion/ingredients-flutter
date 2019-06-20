@@ -20,7 +20,7 @@ class MealService {
   Future<List<Food>> getCategory(String category) async {
     final response = await _client.get("$_baseUrl/filter.php?c=$category");
     final body = json.decode(response.body);
-    final list = body['meals'].map<Food>((item) => Food.fromJson(item)).toList();
+    final list = body['meals'].map<Food>((item) => Food.fromJson(item, category)).toList();
     return list;
   }
 
@@ -29,12 +29,5 @@ class MealService {
     final body = json.decode(response.body);
     final data = FoodDetail.fromJson(body["meals"][0]);
     return data;
-  }
-
-  Future<List<FoodDetail>> findMeal(String search) async {
-    final response = await _client.get("$_baseUrl/filter.php?s=$search");
-    final body = json.decode(response.body);
-    final list = body['meals'].map<FoodDetail>((item) => Food.fromJson(item)).toList();
-    return list;
   }
 }

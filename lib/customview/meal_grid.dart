@@ -4,8 +4,9 @@ import 'package:ingredients/model/food.dart';
 
 class MealGrid extends StatelessWidget {
   final List<Food> list;
+  final GestureTapCallback callback;
 
-  MealGrid({@required this.list}): assert(list != null);
+  MealGrid({@required this.list, this.callback}): assert(list != null);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +24,13 @@ class MealGrid extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => Detail(
                   item: list[position],
-                  tag: "product_$position",
+                  tag: "product_$position"
                 ),
               ),
-            ),
+            ).then((_) {
+              if (callback != null)
+                callback();
+            }),
             customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12)),
             child: GridTile(

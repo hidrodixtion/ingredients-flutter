@@ -16,7 +16,7 @@ class _FavoriteState extends State<Favorite> {
   void _reloadFavorite(int position) {
     setState(() {
       currentTab = position;
-      favoriteList = FavoriteService.shared().getFavorites(titles[position]);
+      favoriteList = FavoriteService.shared().getFavorites(titles[position].toLowerCase());
     });
   }
 
@@ -43,7 +43,7 @@ class _FavoriteState extends State<Favorite> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MealGrid(list: favoriteList,),
+            child: MealGrid(list: favoriteList, callback: () => _reloadFavorite(currentTab),),
           )
       ),
     );
