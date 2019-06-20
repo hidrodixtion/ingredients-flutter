@@ -26,7 +26,7 @@ class _DetailState extends State<Detail> {
   }
 
   void _loadData() async {
-    detail = await MealService.getDetail(widget.item.id);
+    detail = await MealService.shared().getDetail(widget.item.id);
     setState(() {
       isLoading = false;
     });

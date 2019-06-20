@@ -20,10 +20,11 @@ class _MyAppState extends State<MyApp> {
 
   int currentTab = 0;
   bool isLoading = true;
+  final service = MealService.shared();
 
   void loadData() async {
-    dessert = await MealService.getCategory("dessert");
-    seafood = await MealService.getCategory("seafood");
+    dessert = await service.getCategory("dessert");
+    seafood = await service.getCategory("seafood");
     setState(() {
       currentList = dessert;
       isLoading = false;
