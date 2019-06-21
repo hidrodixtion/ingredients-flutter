@@ -55,6 +55,7 @@ class _SearchState extends State<Search> {
               children: <Widget>[
                 Expanded(
                   child: TextField(
+                    key: Key("search_field"),
                     decoration: InputDecoration(
                       hintText: "Ayam",
                       contentPadding: EdgeInsets.all(10.0),
@@ -70,6 +71,7 @@ class _SearchState extends State<Search> {
                   width: 8,
                 ),
                 IconButton(
+                  key: Key("search_button"),
                   icon: Icon(Icons.search),
                   color: Theme.of(context).accentColor,
                   onPressed: () => _searchList(),

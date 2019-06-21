@@ -46,6 +46,7 @@ class _MenuState extends State<Menu> {
     if (currentTab < 2) {
       return <Widget>[
         IconButton(
+          key: Key("menu_search"),
           icon: Icon(Icons.search),
           onPressed: () => _openSearch(),
         )
@@ -87,11 +88,11 @@ class _MenuState extends State<Menu> {
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.cake), title: Text("Dessert")),
+                icon: Icon(Icons.cake), title: Text("Dessert", key: Key('menu_dessert'),)),
             BottomNavigationBarItem(
                 icon: Icon(Icons.fastfood), title: Text("Seafood")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.stars), title: Text("Favorit")),
+                icon: Icon(Icons.stars), title: Text("Favorit", key: Key("menu_favorite"),)),
           ],
           currentIndex: currentTab,
           onTap: (position) {

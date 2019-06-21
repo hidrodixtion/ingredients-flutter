@@ -16,7 +16,6 @@ class MealGrid extends StatelessWidget {
           crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
       itemBuilder: (context, position) {
         return Material(
-          key: Key("meal_grid_item_$position"),
           type: MaterialType.card,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)),
@@ -38,7 +37,7 @@ class MealGrid extends StatelessWidget {
             child: GridTile(
               footer: GridTileBar(
                 backgroundColor: Colors.black45,
-                title: Text(list[position].name),
+                title: Text(list[position].name, key: Key("meal_grid_item_${position}_text"),),
               ),
               child: Hero(
                 tag: "product_$position",

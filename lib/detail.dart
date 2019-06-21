@@ -24,7 +24,7 @@ class _DetailState extends State<Detail> {
   bool isFavorite = false;
 
   void _showSnackbar(String item) {
-    var snackbar = SnackBar(content: Text(item),);
+    var snackbar = SnackBar(content: Text(item, key: Key("detail_snackbar_text"),),);
     _scaffoldKey.currentState.showSnackBar(snackbar);
   }
 
@@ -75,11 +75,12 @@ class _DetailState extends State<Detail> {
           height: 8,
         ),
         Text(
-          "${detail.area} ${detail.name}",
+          detail.name,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
+          key: Key("detail_meal_name"),
         ),
         Container(
           height: 16,
@@ -100,7 +101,7 @@ class _DetailState extends State<Detail> {
         title: Text("Detail Bahan", key: Key("detail_appbar_title"),),
         automaticallyImplyLeading: true,
         actions: <Widget>[
-          IconButton(icon: Icon(isFavorite ? Icons.star : Icons.star_border), onPressed: () => _toggleFavorite(),),
+          IconButton(icon: Icon(isFavorite ? Icons.star : Icons.star_border), onPressed: () => _toggleFavorite(), key: Key("detail_favorite"),),
         ],
       ),
       body: Padding(
