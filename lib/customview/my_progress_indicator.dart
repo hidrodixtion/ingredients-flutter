@@ -13,7 +13,7 @@ class MyProgressIndicator extends StatelessWidget {
       children: <Widget>[
         CircularProgressIndicator(),
         Container(height: 8,),
-        Text(info),
+        Text(info, key: Key("progress_info")),
       ],
     );
   }

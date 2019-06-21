@@ -97,7 +97,7 @@ class _DetailState extends State<Detail> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Detail Bahan"),
+        title: Text("Detail Bahan", key: Key("detail_appbar_title"),),
         automaticallyImplyLeading: true,
         actions: <Widget>[
           IconButton(icon: Icon(isFavorite ? Icons.star : Icons.star_border), onPressed: () => _toggleFavorite(),),

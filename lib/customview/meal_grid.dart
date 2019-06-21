@@ -11,10 +11,12 @@ class MealGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      key: Key("meal_grid"),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
       itemBuilder: (context, position) {
         return Material(
+          key: Key("meal_grid_item_$position"),
           type: MaterialType.card,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)),
