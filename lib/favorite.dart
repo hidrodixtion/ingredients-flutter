@@ -16,7 +16,7 @@ class _FavoriteState extends State<Favorite> {
   void _reloadFavorite(int position) {
     setState(() {
       currentTab = position;
-      favoriteList = FavoriteService.shared().getFavorites(titles[position].toLowerCase());
+      favoriteList = FavoriteService.shared.getFavorites(titles[position].toLowerCase());
     });
   }
 

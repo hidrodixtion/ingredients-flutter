@@ -16,7 +16,7 @@ class MockClient extends Mock implements http.Client {}
 void main() {
   group("test main widget", () {
     final client = MockClient();
-    final service = MealService.shared();
+    final service = MealService.shared;
 
     setUp(() {
       service.client = client;

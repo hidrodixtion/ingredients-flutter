@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteService {
   static final FavoriteService _sh = new FavoriteService._internal();
-  static FavoriteService shared() => _sh;
+  static FavoriteService get shared => _sh;
 
   FavoriteService._internal() {
     _initSharedPreference();

@@ -10,7 +10,7 @@ class MockClient extends Mock implements http.Client {}
 main() {
   group('fetch list', () {
     final client = MockClient();
-    final service = MealService.shared();
+    final service = MealService.shared;
 
     setUp(() {
       service.client = client;

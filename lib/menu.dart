@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingredients/customview/flavor_banner.dart';
 import 'package:ingredients/customview/meal_grid.dart';
 import 'package:ingredients/customview/my_progress_indicator.dart';
 import 'package:ingredients/detail.dart';
@@ -21,7 +22,7 @@ class _MenuState extends State<Menu> {
 
   int currentTab = 0;
   bool isLoading = true;
-  final service = MealService.shared();
+  final service = MealService.shared;
 
   void _openSearch() {
     final title = (currentTab == 0) ? "Cari Dessert" : "Cari Seafood";
@@ -72,31 +73,33 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: (currentTab < 2)
-          ? AppBar(
-              title: Text("Daftar Makanan"),
-              actions: _buildBarAction(),
-            )
-          : null,
-      body: (currentTab < 2)
-          ? Padding(padding: EdgeInsets.all(8), child: _buildFoodList())
-          : Favorite(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.cake), title: Text("Dessert")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood), title: Text("Seafood")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.stars), title: Text("Favorit")),
-        ],
-        currentIndex: currentTab,
-        onTap: (position) {
-          setState(() {
-            currentTab = position;
-          });
-        },
+    return FlavorBanner(
+      child: Scaffold(
+        appBar: (currentTab < 2)
+            ? AppBar(
+                title: Text("Daftar Makanan"),
+                actions: _buildBarAction(),
+              )
+            : null,
+        body: (currentTab < 2)
+            ? Padding(padding: EdgeInsets.all(8), child: _buildFoodList())
+            : Favorite(),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.cake), title: Text("Dessert")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.fastfood), title: Text("Seafood")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.stars), title: Text("Favorit")),
+          ],
+          currentIndex: currentTab,
+          onTap: (position) {
+            setState(() {
+              currentTab = position;
+            });
+          },
+        ),
       ),
     );
   }

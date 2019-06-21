@@ -7,7 +7,7 @@ import 'package:ingredients/model/food_detail.dart';
 class MealService {
   // init singleton
   static final MealService _sh = new MealService._internal();
-  static MealService shared() => _sh;
+  static MealService get shared => _sh;
   MealService._internal();
 
   var _client = http.Client();
